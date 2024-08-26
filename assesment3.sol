@@ -22,5 +22,13 @@ contract CricketFanToken is ERC20, Ownable {
     function balance(address account) public view returns (uint256) {
         return balanceOf(account);
     }
-}
 
+    // Explicit transfer function
+    function transfer(address recipient, uint256 amount) public override returns (bool) {
+        require(recipient != address(0), "Transfer to the zero address");
+        require(balanceOf(msg.sender) >= amount, "Insufficient balance");
+
+        _transfer(msg.sender, recipient, amount);
+        return true;
+    }
+}
